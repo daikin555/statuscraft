@@ -4,6 +4,8 @@
 
 **English** · [日本語](README-ja.md)
 
+**▶ [Open the designer](https://daikin555.github.io/statuscraft/)** — runs entirely in your browser, no install required.
+
 A browser-based GUI tool that generates working bash scripts for customizing Claude Code's statusline. Design visually, get a production-ready script instantly.
 
 ## What is this?
@@ -26,6 +28,7 @@ The result is a working, commented bash script that handles:
 
 ## Features
 
+- **Use it instantly**: the [hosted designer](https://daikin555.github.io/statuscraft/) runs in your browser — no install, no clone
 - **34 tokens** across 6 categories: Model & Session, Context Window, Cost & Activity, Rate Limits, Workspace, Advanced
 - **6 built-in presets**: Minimal, Standard, Developer, Rate-aware, Visual bar, Full info
 - **Live preview** with 3 load states (Normal, High load, Startup)
@@ -38,6 +41,14 @@ The result is a working, commented bash script that handles:
 - **Dark terminal aesthetic**: Designed to match Claude Code's interface
 
 ## Quick Start
+
+### Use it instantly (hosted)
+
+The designer is hosted on GitHub Pages — just open it and start designing:
+
+**▶ https://daikin555.github.io/statuscraft/**
+
+It runs entirely in your browser (client-side; nothing is uploaded). Design your statusline, then **copy the generated script** or **download the config**, and follow the on-screen steps.
 
 ### As a Claude Code Skill
 
@@ -306,7 +317,7 @@ Colors are embedded in the generated script using ANSI escape codes and properly
 Design configurations are encoded in the URL query string. Share your design:
 
 ```
-https://your-domain.com/statuscraft.html?fmt={model}|{cost}&colors=1&cc=session:35,context:36
+https://daikin555.github.io/statuscraft/?fmt={model}|{cost}&colors=1&cc=session:35,context:36
 ```
 
 Parameters:
