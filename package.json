@@ -1,0 +1,43 @@
+{
+  "name": "statuscraft",
+  "version": "4.0.0",
+  "description": "Visual statusline designer for Claude Code — launch the GUI with npx/bunx, no install.",
+  "type": "module",
+  "bin": {
+    "statuscraft": "bin/cli.mjs"
+  },
+  "files": [
+    "bin/",
+    "index.html",
+    "README.md",
+    "README-ja.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node bin/cli.mjs"
+  },
+  "keywords": [
+    "claude-code",
+    "claude",
+    "statusline",
+    "status-line",
+    "anthropic",
+    "cli",
+    "generator",
+    "bash",
+    "jq"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daikin555/statuscraft.git"
+  },
+  "homepage": "https://github.com/daikin555/statuscraft#readme",
+  "bugs": {
+    "url": "https://github.com/daikin555/statuscraft/issues"
+  },
+  "author": "daikin555",
+  "license": "MIT"
+}

@@ -26,6 +26,7 @@ The result is a working, commented bash script that handles:
 
 ## Features
 
+- **Zero-install launch**: `npx statuscraft` or `bunx statuscraft` opens the designer instantly — no clone, no build
 - **34 tokens** across 6 categories: Model & Session, Context Window, Cost & Activity, Rate Limits, Workspace, Advanced
 - **6 built-in presets**: Minimal, Standard, Developer, Rate-aware, Visual bar, Full info
 - **Live preview** with 3 load states (Normal, High load, Startup)
@@ -38,6 +39,20 @@ The result is a working, commented bash script that handles:
 - **Dark terminal aesthetic**: Designed to match Claude Code's interface
 
 ## Quick Start
+
+### Instant launch (no install)
+
+Run the designer straight from npm — no clone, no build step:
+
+```bash
+npx statuscraft@latest
+# or
+bunx statuscraft
+```
+
+This serves the visual designer at `http://localhost:4567` and opens it in your browser. Design your statusline, click **Apply to Claude Code** (or copy the script), then follow the on-screen steps. Press `Ctrl+C` to stop the local server.
+
+Flags: `--port <n>` to choose a port, `--no-open` to skip auto-opening the browser.
 
 ### As a Claude Code Skill
 
