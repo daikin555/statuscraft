@@ -2,6 +2,8 @@
 
 > Visual statusline designer for Claude Code
 
+**English** · [日本語](README-ja.md)
+
 A browser-based GUI tool that generates working bash scripts for customizing Claude Code's statusline. Design visually, get a production-ready script instantly.
 
 ## What is this?
@@ -24,7 +26,7 @@ The result is a working, commented bash script that handles:
 
 ## Features
 
-- **24 tokens** across 6 categories: Model & Session, Context Window, Cost & Activity, Rate Limits, Workspace, Advanced
+- **34 tokens** across 6 categories: Model & Session, Context Window, Cost & Activity, Rate Limits, Workspace, Advanced
 - **6 built-in presets**: Minimal, Standard, Developer, Rate-aware, Visual bar, Full info
 - **Live preview** with 3 load states (Normal, High load, Startup)
 - **Color customization**: 8 ANSI color options per group
@@ -50,7 +52,7 @@ This opens the designer in your browser. Design your statusline, click "Apply to
 ### As a Standalone Web App
 
 1. Clone this repo: `git clone https://github.com/YOUR_USER/statuscraft.git`
-2. Open `assets/statuscraft.html` in your browser (or host on GitHub Pages)
+2. Open `index.html` in your browser (or host on GitHub Pages)
 3. Design your statusline
 4. Copy the generated bash script
 5. Save to `~/.claude/statusline.sh`
@@ -65,6 +67,8 @@ This opens the designer in your browser. Design your statusline, click "Apply to
   }
 }
 ```
+
+> **Conditional fields:** StatusCraft adds `"refreshInterval": 60` automatically when your design uses a time-based token (`{time}`, `{rate_5h_reset}`, `{rate_7d_reset}`) so the value keeps refreshing while the session is idle, and `"hideVimModeIndicator": true` when you use `{vim_mode}` (so the mode isn't rendered twice). A static statusline keeps the minimal config above.
 
 7. Restart Claude Code
 
@@ -81,8 +85,8 @@ Claude Code sends JSON via stdin → Your bash script reads it with jq → Scrip
 ```json
 {
   "model": {
-    "display_name": "Opus 4.6",
-    "id": "claude-opus-4-6"
+    "display_name": "Opus",
+    "id": "claude-opus-4-8"
   },
   "context_window": {
     "used_percentage": 42,
@@ -98,7 +102,7 @@ Claude Code sends JSON via stdin → Your bash script reads it with jq → Scrip
 **Your script** parses this with `jq` and outputs:
 
 ```
-Opus 4.6 | 42% | $0.042
+Opus | 42% | $0.042
 ```
 
 That's it. StatusCraft generates the full script automatically.
@@ -111,10 +115,11 @@ Tokens are grouped into 6 categories. Click any token to add it to your format s
 
 | Token | Description | Example |
 |-------|-------------|---------|
-| `{model}` | Active model display name | `Opus 4.6` |
-| `{model_id}` | Full model identifier | `claude-opus-4-6` |
+| `{model}` | Active model display name | `Opus` |
+| `{model_id}` | Full model identifier | `claude-opus-4-8` |
 | `{version}` | Claude Code version | `1.0.80` |
 | `{session_id}` | First 8 chars of session ID | `a1b2c3d4` |
+| `{session_name}` | Custom session name (`--name` / `/rename`) | `my-session` |
 
 #### Context Window
 
@@ -123,8 +128,8 @@ Tokens are grouped into 6 categories. Click any token to add it to your format s
 | `{context_pct}` | Context usage percentage | `42` |
 | `{context_remaining}` | Context remaining percentage | `58` |
 | `{context_bar}` | Visual progress bar | `████░░░░` |
-| `{input_tokens}` | Cumulative input tokens (formatted) | `15.2K` |
-| `{output_tokens}` | Cumulative output tokens (formatted) | `4.5K` |
+| `{input_tokens}` | Current context input tokens (formatted) | `15.2K` |
+| `{output_tokens}` | Current context output tokens (formatted) | `4.5K` |
 | `{context_size}` | Max context window (formatted) | `200K` |
 
 #### Cost & Activity
@@ -145,6 +150,8 @@ Tokens are grouped into 6 categories. Click any token to add it to your format s
 | `{rate_5h_reset}` | Time until 5h resets | `2h15m` |
 | `{rate_7d_reset}` | Time until 7d resets | `45m` |
 
+> **Note:** Rate-limit tokens populate only for Claude.ai Pro/Max accounts, and only after the first API response in a session. On API-key/Console plans they render as `—`.
+
 #### Workspace
 
 | Token | Description | Example |
@@ -152,11 +159,23 @@ Tokens are grouped into 6 categories. Click any token to add it to your format s
 | `{cwd}` | Current working directory | `~/myproject` |
 | `{cwd_short}` | Folder name only | `myproject` |
 | `{project_dir}` | Project root | `~/projects` |
+| `{repo}` | Repository owner/name (from git origin) | `anthropics/claude-code` |
 | `{time}` | Current time (HH:MM) | `14:32` |
 
 #### Advanced
 
-Additional tokens for fine-grained control (context without %, raw token counts, reset timestamps, etc.)
+| Token | Description | Example |
+|-------|-------------|---------|
+| `{vim_mode}` | Current vim mode | `NORMAL` |
+| `{agent}` | Running agent name | `reviewer` |
+| `{worktree}` | Worktree name (`--worktree` sessions only) | `my-feature` |
+| `{worktree_branch}` | Branch of the active worktree | `worktree-my-feature` |
+| `{git_worktree}` | Any git worktree name | `feature-xyz` |
+| `{effort}` | Reasoning effort (`low`–`max`) | `xhigh` |
+| `{thinking}` | Extended-thinking indicator | `thinking` |
+| `{output_style}` | Active output style (hidden when `default`) | `Explanatory` |
+| `{pr_number}` | Open PR for the current branch | `#1234` |
+| `{pr_review}` | PR review state | `pending` |
 
 ### Presets
 
@@ -243,6 +262,8 @@ The skill automatically:
 }
 ```
 
+> StatusCraft may also emit `"refreshInterval"` (for time-based tokens) and `"hideVimModeIndicator"` (for `{vim_mode}`) — see the note in [Quick Start](#as-a-standalone-web-app).
+
 4. Restart Claude Code
 
 ## Requirements
@@ -252,6 +273,8 @@ The skill automatically:
 - `bash` (or compatible shell)
 - `jq` (JSON processor) — install via Homebrew: `brew install jq`
 - Claude Code (obviously)
+
+> **Windows:** generated scripts are Bash. Run them through Git Bash or WSL, and in `settings.json` write the `command` path with forward slashes (Git Bash silently drops backslashes in paths).
 
 ### For the Designer UI
 
@@ -322,7 +345,7 @@ brew install jq
 
 ## Architecture
 
-- **Single HTML file** (`assets/statuscraft.html`) — No build step
+- **Single HTML file** (`index.html`) — No build step
 - **Vanilla JavaScript** — No framework dependencies
 - **Embedded fonts** from Google Fonts
 - **Token definitions** hardcoded for reliability

@@ -53,6 +53,8 @@ Read the most recent file. It contains:
 }
 ```
 
+The `settings.statusLine` block may additionally contain `"refreshInterval"` (added when the design uses a time-based token such as `{time}` / `{rate_5h_reset}` / `{rate_7d_reset}`) and/or `"hideVimModeIndicator": true` (added when `{vim_mode}` is used). Apply whatever keys are present verbatim — do not strip them.
+
 ### Step 4: Apply the Configuration
 
 1. **Write the script**: Save `config.script` to `~/.claude/statusline.sh`
