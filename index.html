@@ -511,6 +511,61 @@ header {
 }
 .cc-swatch-none.active { border-color: var(--green) !important; border-style: solid !important; }
 
+/* Advanced styling controls (issues #10-#16) */
+.cc-global .cc-label, .cc-checkrow .cc-label { flex: 1; }
+.cc-select {
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border2);
+  border-radius: 5px;
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 3px 6px;
+  max-width: 60%;
+}
+.cc-note {
+  font-size: 10px;
+  color: var(--text3);
+  line-height: 1.4;
+  padding: 4px 0 8px;
+}
+.cc-subheader {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text2);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border2);
+}
+.cc-ctrls { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.cc-colorctrl { display: flex; align-items: center; gap: 3px; }
+.cc-cctag { font-size: 9px; color: var(--text3); font-family: 'JetBrains Mono', monospace; }
+.cc-hex {
+  width: 24px; height: 22px;
+  padding: 0; border: 1px solid var(--border2);
+  border-radius: 4px; background: none; cursor: pointer;
+}
+.cc-colorctrl.cc-unset .cc-hex { opacity: 0.3; }
+.cc-clear {
+  width: 18px; height: 18px;
+  border: 1px solid var(--border2); border-radius: 4px;
+  background: var(--bg); color: var(--text2);
+  cursor: pointer; font-size: 11px; line-height: 1; padding: 0;
+}
+.cc-clear:hover { border-color: var(--text2); }
+.cc-attr {
+  width: 22px; height: 22px;
+  border: 1px solid var(--border2); border-radius: 4px;
+  background: var(--bg); color: var(--text2);
+  cursor: pointer; font-size: 11px; padding: 0;
+}
+.cc-attr:hover { border-color: var(--text2); }
+.cc-attr.active { background: var(--green); color: #07120b; border-color: var(--green); }
+.cc-checkrow { cursor: pointer; }
+.cc-checkrow input { width: 15px; height: 15px; cursor: pointer; }
+
 .terminal-window {
   border-radius: var(--r2);
   border: 1px solid var(--border2);
@@ -1194,7 +1249,33 @@ var I18N = {
     applyBtn: "Apply to Claude Code",
     applyHint: "Downloads config for Claude Code to apply",
     toastApplied: "Config downloaded! Go back to Claude Code.",
-    newlineSep: "New line"
+    newlineSep: "New line",
+    ccDepth: "Color depth",
+    ccDepthBasic: "Basic 16",
+    ccDepthTrue: "Truecolor",
+    ccDepthNote: "Truecolor needs a capable terminal (iTerm2/kitty/WezTerm). macOS Terminal.app is 256-color only — pick 256 there.",
+    ccTheme: "Theme",
+    ccThemeNone: "None (custom)",
+    ccStyleNote: "Italic & dim are terminal-dependent (Terminal.app ignores italic). Always reset with \\033[0m.",
+    plHeader: "Powerline mode",
+    plEnable: "Enable powerline segments",
+    plSep: "Separator",
+    plCap: "Start cap",
+    plPad: "Padding",
+    plNote: "Powerline glyphs need a Nerd Font and may render as blank gaps in Claude Code's TUI (claude-code#49270). Use the font-free TUI style if unsure.",
+    iconHeader: "Icons",
+    iconEnable: "Enable per-token icons",
+    iconTier: "Icon tier",
+    iconNote: "Nerd Font icons need a Nerd Font and may show as boxes in Claude Code's TUI. Emoji are double-width and may misalign bars/powerline.",
+    barHeader: "Context bar style",
+    barWidth: "Width",
+    barStyle: "Style",
+    barColor: "Color mode",
+    compatHeader: "Compatibility",
+    compatCharset: "Charset tier",
+    compatGuard: "Runtime color fallback (larger script)",
+    compatNoColor: "Respect NO_COLOR / FORCE_COLOR",
+    compatNote: "$COLORTERM isn't always propagated (tmux/screen can strip it) — the runtime guard is best-effort."
   },
   ja: {
     share: "URL\u3092\u5171\u6709",
@@ -1245,7 +1326,33 @@ var I18N = {
     applyBtn: "Claude Code\u306b\u9069\u7528",
     applyHint: "\u8a2d\u5b9a\u30d5\u30a1\u30a4\u30eb\u3092\u30c0\u30a6\u30f3\u30ed\u30fc\u30c9\u3057\u307e\u3059",
     toastApplied: "\u8a2d\u5b9a\u3092\u30c0\u30a6\u30f3\u30ed\u30fc\u30c9\u3057\u307e\u3057\u305f\uff01Claude Code\u306b\u623b\u3063\u3066\u304f\u3060\u3055\u3044\u3002",
-    newlineSep: "\u6539\u884c"
+    newlineSep: "\u6539\u884c",
+    ccDepth: "\u8272\u6df1\u5ea6",
+    ccDepthBasic: "\u57fa\u672c16\u8272",
+    ccDepthTrue: "Truecolor",
+    ccDepthNote: "Truecolor\u306f\u5bfe\u5fdc\u30bf\u30fc\u30df\u30ca\u30eb\uff08iTerm2/kitty/WezTerm\uff09\u304c\u5fc5\u8981\u3002macOS Terminal.app\u306f256\u8272\u306e\u307f\u3002",
+    ccTheme: "\u30c6\u30fc\u30de",
+    ccThemeNone: "\u306a\u3057\uff08\u30ab\u30b9\u30bf\u30e0\uff09",
+    ccStyleNote: "Italic\u30fbDim\u306f\u30bf\u30fc\u30df\u30ca\u30eb\u4f9d\u5b58\uff08Terminal.app\u306fItalic\u7121\u8996\uff09\u3002\u5e38\u306b\\033[0m\u3067\u30ea\u30bb\u30c3\u30c8\u3002",
+    plHeader: "Powerline\u30e2\u30fc\u30c9",
+    plEnable: "Powerline\u30bb\u30b0\u30e1\u30f3\u30c8\u3092\u6709\u52b9\u5316",
+    plSep: "\u30bb\u30d1\u30ec\u30fc\u30bf",
+    plCap: "\u958b\u59cb\u30ad\u30e3\u30c3\u30d7",
+    plPad: "\u30d1\u30c7\u30a3\u30f3\u30b0",
+    plNote: "Powerline\u30b0\u30ea\u30d5\u306fNerd Font\u304c\u5fc5\u8981\u3067\u3001Claude Code\u306eTUI\u3067\u306f\u7a7a\u767d\u306b\u306a\u308b\u3053\u3068\u304c\u3042\u308a\u307e\u3059\uff08claude-code#49270\uff09\u3002\u4e0d\u5b89\u306a\u3089\u30d5\u30a9\u30f3\u30c8\u4e0d\u8981\u306eTUI\u30b9\u30bf\u30a4\u30eb\u3092\u3002",
+    iconHeader: "\u30a2\u30a4\u30b3\u30f3",
+    iconEnable: "\u30c8\u30fc\u30af\u30f3\u5225\u30a2\u30a4\u30b3\u30f3\u3092\u6709\u52b9\u5316",
+    iconTier: "\u30a2\u30a4\u30b3\u30f3\u30c6\u30a3\u30a2",
+    iconNote: "Nerd Font\u30a2\u30a4\u30b3\u30f3\u306fNerd Font\u304c\u5fc5\u8981\u3067Claude Code\u306eTUI\u3067\u306f\u25a1\u306b\u306a\u308b\u3053\u3068\u304c\u3042\u308a\u307e\u3059\u3002\u7d75\u6587\u5b57\u306f\u5e45\u5e83\u3067\u30d0\u30fc\u3068\u305a\u308c\u308b\u3053\u3068\u304c\u3042\u308a\u307e\u3059\u3002",
+    barHeader: "\u30b3\u30f3\u30c6\u30ad\u30b9\u30c8\u30d0\u30fc\u30b9\u30bf\u30a4\u30eb",
+    barWidth: "\u5e45",
+    barStyle: "\u30b9\u30bf\u30a4\u30eb",
+    barColor: "\u8272\u30e2\u30fc\u30c9",
+    compatHeader: "\u4e92\u63db\u6027",
+    compatCharset: "\u6587\u5b57\u30bb\u30c3\u30c8",
+    compatGuard: "\u30e9\u30f3\u30bf\u30a4\u30e0\u8272\u30d5\u30a9\u30fc\u30eb\u30d0\u30c3\u30af\uff08\u30b9\u30af\u30ea\u30d7\u30c8\u5927\uff09",
+    compatNoColor: "NO_COLOR / FORCE_COLOR \u3092\u5c0a\u91cd",
+    compatNote: "$COLORTERM\u306f\u5e38\u306b\u4f1d\u64ad\u3055\u308c\u308b\u3068\u306f\u9650\u3089\u305a\uff08tmux/screen\u304c\u9664\u53bb\uff09\u3001\u30e9\u30f3\u30bf\u30a4\u30e0\u30ac\u30fc\u30c9\u306f\u30d9\u30b9\u30c8\u30a8\u30d5\u30a9\u30fc\u30c8\u3067\u3059\u3002"
   }
 };
 
@@ -1265,18 +1372,235 @@ var ANSI_PALETTE = [
   { name: "none",    ansi: "",          code: "0",  css: "",        label: { en: "None", ja: "なし" } }
 ];
 
-var groupColors = {
-  session:   "\\033[35m",
-  context:   "\\033[36m",
-  cost:      "\\033[33m",
-  rate:      "\\033[31m",
-  workspace: "\\033[34m",
-  advanced:  "\\033[37m"
+/* ═══════════════════════════════════════════════
+   COLOR MODEL (issue #10): depth selector + per-group fg/bg hex + text attrs.
+   groupStyle is the single source of truth; basic-16 codes are derived by nearest-match
+   so that the default hex values reproduce the original 31-37 output exactly.
+═══════════════════════════════════════════════ */
+var colorDepth = "basic"; /* "basic" | "256" | "truecolor" */
+
+/* Basic-16 reference palette (SGR fg code → representative hex) for nearest-match. */
+var BASIC16 = [
+  { code: 30, css: "#1a1a1a" }, { code: 31, css: "#ef4444" }, { code: 32, css: "#3ddc84" },
+  { code: 33, css: "#e3b341" }, { code: 34, css: "#58a6ff" }, { code: 35, css: "#a78bfa" },
+  { code: 36, css: "#39c5cf" }, { code: 37, css: "#d0dae6" }
+];
+
+/* Per-group structured style. fg/bg are hex strings or null (= no color).
+   Defaults mirror the original basic palette so untouched output is byte-identical. */
+var groupStyle = {
+  session:   { fg: "#a78bfa", bg: null, bold:false, dim:false, italic:false, underline:false },
+  context:   { fg: "#39c5cf", bg: null, bold:false, dim:false, italic:false, underline:false },
+  cost:      { fg: "#e3b341", bg: null, bold:false, dim:false, italic:false, underline:false },
+  rate:      { fg: "#ef4444", bg: null, bold:false, dim:false, italic:false, underline:false },
+  workspace: { fg: "#58a6ff", bg: null, bold:false, dim:false, italic:false, underline:false },
+  advanced:  { fg: "#d0dae6", bg: null, bold:false, dim:false, italic:false, underline:false }
 };
 
-/* Map ANSI code to CSS preview color */
-var ANSI_TO_CSS = {};
-ANSI_PALETTE.forEach(function(p) { ANSI_TO_CSS[p.ansi] = p.css; });
+function hexToRgb(hex) {
+  if (!hex) return null;
+  var h = hex.replace("#", "");
+  if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+  if (h.length !== 6) return null;
+  return { r: parseInt(h.substr(0, 2), 16), g: parseInt(h.substr(2, 2), 16), b: parseInt(h.substr(4, 2), 16) };
+}
+
+/* Nearest basic-16 fg code for a hex (used in basic depth and as truecolor→16 fallback). */
+function nearestBasicCode(hex) {
+  var c = hexToRgb(hex);
+  if (!c) return 37;
+  var best = 37, bestD = Infinity;
+  BASIC16.forEach(function(p) {
+    var pc = hexToRgb(p.css);
+    var d = (pc.r - c.r) * (pc.r - c.r) + (pc.g - c.g) * (pc.g - c.g) + (pc.b - c.b) * (pc.b - c.b);
+    if (d < bestD) { bestD = d; best = p.code; }
+  });
+  return best;
+}
+
+/* hex → xterm-256 cube/grayscale index. */
+function hexTo256(hex) {
+  var c = hexToRgb(hex);
+  if (!c) return 15;
+  if (Math.abs(c.r - c.g) < 10 && Math.abs(c.g - c.b) < 10 && Math.abs(c.r - c.b) < 10) {
+    if (c.r < 8) return 16;
+    if (c.r > 248) return 231;
+    return Math.round((c.r - 8) / 247 * 24) + 232;
+  }
+  var ri = Math.round(c.r / 255 * 5), gi = Math.round(c.g / 255 * 5), bi = Math.round(c.b / 255 * 5);
+  return 16 + 36 * ri + 6 * gi + bi;
+}
+
+/* SGR sub-codes for a foreground hex at the current depth (no math at runtime). */
+function fgCodes(hex, depth) {
+  if (!hex) return [];
+  if (depth === "truecolor") { var c = hexToRgb(hex); return ["38", "2", "" + c.r, "" + c.g, "" + c.b]; }
+  if (depth === "256") return ["38", "5", "" + hexTo256(hex)];
+  return ["" + nearestBasicCode(hex)];
+}
+function bgCodes(hex, depth) {
+  if (!hex) return [];
+  if (depth === "truecolor") { var c = hexToRgb(hex); return ["48", "2", "" + c.r, "" + c.g, "" + c.b]; }
+  if (depth === "256") return ["48", "5", "" + hexTo256(hex)];
+  return ["" + (nearestBasicCode(hex) + 10)];
+}
+
+/* Build the bash SGR escape (\033[...m) for a group's style. Returns "" when there is
+   no styling at all (so plain output stays plain). depth defaults to the global colorDepth. */
+function sgrPrefix(style, depth) {
+  if (!style) return "";
+  depth = depth || colorDepth;
+  var codes = [];
+  if (style.bold || (typeof textStyle !== "undefined" && textStyle.globalBold)) codes.push("1");
+  if (style.dim) codes.push("2");
+  if (style.italic) codes.push("3");
+  if (style.underline) codes.push("4");
+  if (style.fg) codes = codes.concat(fgCodes(style.fg, depth));
+  if (style.bg) codes = codes.concat(bgCodes(style.bg, depth));
+  if (codes.length === 0) return "";
+  return "\\033[" + codes.join(";") + "m";
+}
+
+/* CSS for the HTML preview — approximates 256/truecolor with the raw hex. */
+function styleFgCss(style) { return style && style.fg ? style.fg : null; }
+function styleBgCss(style) { return style && style.bg ? style.bg : null; }
+
+/* ═══════════════════════════════════════════════
+   TEXT STYLE GLOBALS (issue #15)
+═══════════════════════════════════════════════ */
+var textStyle = { globalBold: false, dimSeparators: false };
+
+/* ═══════════════════════════════════════════════
+   CURATED THEMES (issue #11) — role→hex maps per family/variant.
+   Roles: session, context, cost, rate, workspace, advanced + base/surface + warn/crit.
+═══════════════════════════════════════════════ */
+var THEMES = {
+  "catppuccin-mocha": { label: "Catppuccin Mocha", session:"#cba6f7", context:"#89b4fa", cost:"#fab387", rate:"#f38ba8", workspace:"#74c7ec", advanced:"#a6adc8", base:"#1e1e2e", surface:"#313244", text:"#cdd6f4", warn:"#fab387", crit:"#f38ba8" },
+  "catppuccin-macchiato": { label: "Catppuccin Macchiato", session:"#c6a0f6", context:"#8aadf4", cost:"#f5a97f", rate:"#ed8796", workspace:"#7dc4e4", advanced:"#a5adcb", base:"#24273a", surface:"#363a4f", text:"#cad3f5", warn:"#f5a97f", crit:"#ed8796" },
+  "catppuccin-latte": { label: "Catppuccin Latte", session:"#8839ef", context:"#1e66f5", cost:"#fe640b", rate:"#d20f39", workspace:"#209fb5", advanced:"#6c6f85", base:"#eff1f5", surface:"#ccd0da", text:"#4c4f69", warn:"#fe640b", crit:"#d20f39" },
+  "dracula": { label: "Dracula", session:"#bd93f9", context:"#8be9fd", cost:"#ffb86c", rate:"#ff5555", workspace:"#50fa7b", advanced:"#6272a4", base:"#282a36", surface:"#44475a", text:"#f8f8f2", warn:"#ffb86c", crit:"#ff5555" },
+  "nord": { label: "Nord", session:"#b48ead", context:"#88c0d0", cost:"#ebcb8b", rate:"#bf616a", workspace:"#81a1c1", advanced:"#4c566a", base:"#2e3440", surface:"#3b4252", text:"#d8dee9", warn:"#d08770", crit:"#bf616a" },
+  "tokyo-night": { label: "Tokyo Night", session:"#bb9af7", context:"#7dcfff", cost:"#e0af68", rate:"#f7768e", workspace:"#7aa2f7", advanced:"#565f89", base:"#1a1b26", surface:"#24283b", text:"#c0caf5", warn:"#e0af68", crit:"#f7768e" },
+  "tokyo-storm": { label: "Tokyo Night Storm", session:"#bb9af7", context:"#7dcfff", cost:"#e0af68", rate:"#f7768e", workspace:"#7aa2f7", advanced:"#565f89", base:"#24283b", surface:"#2f3549", text:"#c0caf5", warn:"#e0af68", crit:"#f7768e" },
+  "gruvbox": { label: "Gruvbox Dark", session:"#b16286", context:"#689d6a", cost:"#d79921", rate:"#cc241d", workspace:"#458588", advanced:"#928374", base:"#282828", surface:"#3c3836", text:"#ebdbb2", warn:"#d79921", crit:"#cc241d" },
+  "rose-pine": { label: "Rosé Pine", session:"#c4a7e7", context:"#9ccfd8", cost:"#f6c177", rate:"#eb6f92", workspace:"#31748f", advanced:"#6e6a86", base:"#191724", surface:"#1f1d2e", text:"#e0def4", warn:"#f6c177", crit:"#eb6f92" },
+  "rose-pine-moon": { label: "Rosé Pine Moon", session:"#c4a7e7", context:"#9ccfd8", cost:"#f6c177", rate:"#eb6f92", workspace:"#3e8fb0", advanced:"#6e6a86", base:"#232136", surface:"#2a273f", text:"#e0def4", warn:"#f6c177", crit:"#eb6f92" },
+  "rose-pine-dawn": { label: "Rosé Pine Dawn", session:"#907aa9", context:"#56949f", cost:"#ea9d34", rate:"#b4637a", workspace:"#286983", advanced:"#9893a5", base:"#faf4ed", surface:"#fffaf3", text:"#575279", warn:"#ea9d34", crit:"#b4637a" }
+};
+var activeTheme = null;
+
+/* Apply a theme: recolor every group FG (and BG when powerline/bg is active). */
+function applyTheme(key) {
+  var th = THEMES[key];
+  if (!th) return;
+  activeTheme = key;
+  ["session", "context", "cost", "rate", "workspace", "advanced"].forEach(function(gid) {
+    groupStyle[gid].fg = th[gid];
+    if (powerline.enabled) groupStyle[gid].bg = th.surface;
+  });
+}
+
+function buildThemeRow(panel, L) {
+  var row = document.createElement("div");
+  row.className = "cc-row cc-global";
+  var label = document.createElement("span");
+  label.className = "cc-label";
+  label.textContent = L.ccTheme;
+  row.appendChild(label);
+  var sel = document.createElement("select");
+  sel.className = "cc-select";
+  var none = document.createElement("option");
+  none.value = ""; none.textContent = L.ccThemeNone;
+  if (!activeTheme) none.selected = true;
+  sel.appendChild(none);
+  Object.keys(THEMES).forEach(function(k) {
+    var opt = document.createElement("option");
+    opt.value = k; opt.textContent = THEMES[k].label;
+    if (activeTheme === k) opt.selected = true;
+    sel.appendChild(opt);
+  });
+  sel.onchange = function() {
+    if (sel.value) { applyTheme(sel.value); if (colorDepth === "basic") colorDepth = "truecolor"; }
+    else { activeTheme = null; }
+    buildColorConfig();
+    onFormatChange();
+  };
+  row.appendChild(sel);
+  panel.appendChild(row);
+}
+
+/* ═══════════════════════════════════════════════
+   POWERLINE (issue #12)
+═══════════════════════════════════════════════ */
+var powerline = { enabled: false, sep: "arrow", startCap: false, padding: 1, tui: false };
+var PL_SEPARATORS = {
+  arrow:  { label: "Arrow", right: "", left: "" },
+  thin:   { label: "Thin chevron", right: "", left: "" },
+  round:  { label: "Round pill", right: "", left: "" },
+  slant:  { label: "Slant", right: "", left: "" },
+  flame:  { label: "Flame", right: "", left: "" },
+  lego:   { label: "Lego", right: "", left: "" },
+  tui:    { label: "TUI (box-drawing, font-free)", right: "│", left: "│", tui: "│" }
+};
+
+/* ═══════════════════════════════════════════════
+   ICONS (issue #13) — three portability tiers + ASCII fallback.
+═══════════════════════════════════════════════ */
+var icons = { enabled: false, tier: "emoji" }; /* emoji | unicode | nerd | ascii */
+/* Per-token icon presets keyed by token id (falls back to group default). */
+var ICON_SETS = {
+  emoji: {
+    model: "🤖", model_id: "🤖",
+    context_pct: "🧠", context_remaining: "🧠", context_bar: "📊",
+    input_tokens: "📥", output_tokens: "📤",
+    cost: "💰", duration: "⏱️", api_duration: "⏱️", lines_changed: "✏️",
+    rate_5h: "🔥", rate_7d: "🔥", rate_5h_reset: "⏳", rate_7d_reset: "⏳",
+    cwd: "📁", cwd_short: "📁", project_dir: "📁", repo: "🐙", time: "🕒",
+    _group: { session: "✨", context: "📊", cost: "💰", rate: "🔥", workspace: "📁", advanced: "⚙️" }
+  },
+  unicode: {
+    model: "✱", model_id: "✱",
+    context_pct: "◔", context_remaining: "◔", context_bar: "◔",
+    cost: "$", duration: "·", rate_5h: "⚡", rate_7d: "⚡",
+    cwd: "§", cwd_short: "§", repo: "⌥", time: "◷",
+    _group: { session: "✱", context: "◔", cost: "$", rate: "⚡", workspace: "§", advanced: "·" }
+  },
+  nerd: {
+    model: "", model_id: "",
+    context_pct: "", context_remaining: "", context_bar: "",
+    cost: "", duration: "", api_duration: "",
+    rate_5h: "", rate_7d: "", rate_5h_reset: "", rate_7d_reset: "",
+    cwd: "", cwd_short: "", project_dir: "", repo: "", time: "",
+    _group: { session: "", context: "", cost: "", rate: "", workspace: "", advanced: "" }
+  },
+  ascii: {
+    model: "M", context_pct: "C", cost: "$", duration: "T", rate_5h: "R", rate_7d: "R",
+    cwd: "~", cwd_short: "~", repo: "G", time: "@",
+    _group: { session: "M", context: "C", cost: "$", rate: "R", workspace: "~", advanced: "*" }
+  }
+};
+/* Per-token override map (token id → true/false to force on/off). Empty = use global. */
+var iconOverrides = {};
+
+/* Resolve the icon glyph for a token (or null when icons are off / none). */
+function iconFor(tokenId, groupId) {
+  if (!icons.enabled) return null;
+  if (iconOverrides[tokenId] === false) return null;
+  var set = ICON_SETS[icons.tier] || ICON_SETS.emoji;
+  if (set[tokenId]) return set[tokenId];
+  if (groupId && set._group && set._group[groupId]) return set._group[groupId];
+  return null;
+}
+
+/* ═══════════════════════════════════════════════
+   BARS (issue #14)
+═══════════════════════════════════════════════ */
+var barConfig = { width: 8, style: "solid", colorMode: "single", t1: 60, t2: 85 };
+
+/* ═══════════════════════════════════════════════
+   COMPATIBILITY / GRACEFUL DEGRADATION (issue #16)
+═══════════════════════════════════════════════ */
+var compat = { charset: "auto", runtimeGuard: false, respectNoColor: false };
 
 /* ═══════════════════════════════════════════════
    TOKEN DATABASE
@@ -1444,6 +1768,7 @@ function init() {
   var langParam = params.get("lang");
   var colorParam = params.get("colors");
   var ccParam = params.get("cc");
+  var cdParam = params.get("cd");
 
   if (langParam === "ja" || langParam === "en") {
     currentLang = langParam;
@@ -1457,20 +1782,52 @@ function init() {
     document.getElementById("colorToggle").checked = true;
   }
 
-  // Parse per-group color params (e.g. cc=session:35,context:36)
+  if (cdParam === "256" || cdParam === "truecolor" || cdParam === "basic") {
+    colorDepth = cdParam;
+  }
+
+  // Parse per-group color params. New form: cc=session:a78bfa or session:a78bfa.1e1e2e (fg.bg).
+  // Back-compat: numeric basic code (cc=session:35), 0 = none.
   if (ccParam) {
     ccParam.split(",").forEach(function(pair) {
       var parts = pair.split(":");
-      if (parts.length === 2 && groupColors.hasOwnProperty(parts[0])) {
-        var code = parts[1];
-        if (code === "0") {
-          groupColors[parts[0]] = "";
-        } else {
-          groupColors[parts[0]] = "\\033[" + code + "m";
+      if (parts.length === 2 && groupStyle.hasOwnProperty(parts[0])) {
+        var val = parts[1];
+        if (val === "0") { groupStyle[parts[0]].fg = null; return; }
+        if (/^\d+$/.test(val)) {
+          var b = BASIC16.filter(function(x) { return x.code == val; })[0];
+          if (b) groupStyle[parts[0]].fg = b.css;
+          return;
         }
+        var fb = val.split(".");
+        if (/^[0-9a-fA-F]{3,6}$/.test(fb[0])) groupStyle[parts[0]].fg = "#" + fb[0];
+        if (fb[1] && /^[0-9a-fA-F]{3,6}$/.test(fb[1])) groupStyle[parts[0]].bg = "#" + fb[1];
       }
     });
   }
+
+  // Feature flags from URL
+  var themeParam = params.get("theme");
+  if (themeParam && THEMES[themeParam]) activeTheme = themeParam;
+  var plParam = params.get("pl");
+  if (plParam) {
+    powerline.enabled = true;
+    if (plParam === "tui") { powerline.tui = true; powerline.sep = "tui"; }
+    else if (PL_SEPARATORS[plParam]) powerline.sep = plParam;
+  }
+  var icParam = params.get("ic");
+  if (icParam && ICON_SETS[icParam]) { icons.enabled = true; icons.tier = icParam; }
+  var barParam = params.get("bar");
+  if (barParam) {
+    var bp = barParam.split("-");
+    if (bp[0]) barConfig.width = parseInt(bp[0], 10) || 8;
+    if (bp[1] && BAR_SRC[bp[1]]) barConfig.style = bp[1];
+    if (bp[2]) barConfig.colorMode = bp[2];
+  }
+  if (params.get("b") === "1") textStyle.globalBold = true;
+  if (params.get("ds") === "1") textStyle.dimSeparators = true;
+  if (params.get("rg") === "1") compat.runtimeGuard = true;
+  if (params.get("nc") === "1") compat.respectNoColor = true;
 
   setLang(currentLang, true);
   buildPresets();
@@ -1762,77 +2119,242 @@ function onColorToggle() {
   onFormatChange();
 }
 
+/* Groups in format-appearance order, then any remaining groups. */
+function orderedGroups() {
+  var fmt = document.getElementById("formatInput").value;
+  var usedTokens = parseTokens(fmt);
+  var seen = [];
+  usedTokens.forEach(function(id) {
+    var g = TOKEN_GROUP_MAP[id];
+    if (g && seen.indexOf(g.id) === -1) seen.push(g.id);
+  });
+  TOKEN_GROUPS.forEach(function(g) { if (seen.indexOf(g.id) === -1) seen.push(g.id); });
+  return seen.map(function(gid) { return TOKEN_GROUPS.find(function(g) { return g.id === gid; }); }).filter(Boolean);
+}
+
+/* A FG/BG color control: swatch + native picker + null toggle. */
+function makeColorCtrl(tag, getVal, setVal, fallback) {
+  var wrap = document.createElement("div");
+  wrap.className = "cc-colorctrl";
+  var lbl = document.createElement("span");
+  lbl.className = "cc-cctag";
+  lbl.textContent = tag;
+  wrap.appendChild(lbl);
+
+  var input = document.createElement("input");
+  input.type = "color";
+  input.className = "cc-hex";
+  var cur = getVal();
+  input.value = cur || fallback;
+  if (!cur) wrap.classList.add("cc-unset");
+  input.oninput = function() { setVal(input.value); onFormatChange(); };
+  wrap.appendChild(input);
+
+  var clr = document.createElement("button");
+  clr.className = "cc-clear";
+  clr.textContent = getVal() ? "×" : "+";
+  clr.title = getVal() ? "Clear" : "Enable";
+  clr.onclick = function() {
+    if (getVal()) setVal(null);
+    else setVal(input.value);
+    buildColorConfig();
+    onFormatChange();
+  };
+  wrap.appendChild(clr);
+  return wrap;
+}
+
 function buildColorConfig() {
   var panel = document.getElementById("colorConfig");
   panel.textContent = "";
+  var L = I18N[currentLang];
 
-  var fmt = document.getElementById("formatInput").value;
-  var usedTokens = parseTokens(fmt);
-
-  // Determine group order by first appearance in the format string
-  var seenGroupIds = [];
-  usedTokens.forEach(function(id) {
-    var g = TOKEN_GROUP_MAP[id];
-    if (g && seenGroupIds.indexOf(g.id) === -1) {
-      seenGroupIds.push(g.id);
-    }
+  // ── Global color-depth selector ──
+  var depthRow = document.createElement("div");
+  depthRow.className = "cc-row cc-global";
+  var depthLabel = document.createElement("span");
+  depthLabel.className = "cc-label";
+  depthLabel.textContent = L.ccDepth;
+  depthRow.appendChild(depthLabel);
+  var depthSel = document.createElement("select");
+  depthSel.className = "cc-select";
+  [["basic", L.ccDepthBasic], ["256", "256-color"], ["truecolor", L.ccDepthTrue]].forEach(function(o) {
+    var opt = document.createElement("option");
+    opt.value = o[0]; opt.textContent = o[1];
+    if (colorDepth === o[0]) opt.selected = true;
+    depthSel.appendChild(opt);
   });
+  depthSel.onchange = function() { colorDepth = depthSel.value; buildColorConfig(); onFormatChange(); };
+  depthRow.appendChild(depthSel);
+  panel.appendChild(depthRow);
 
-  // Append remaining groups not referenced in the format string
-  TOKEN_GROUPS.forEach(function(g) {
-    if (seenGroupIds.indexOf(g.id) === -1) {
-      seenGroupIds.push(g.id);
-    }
-  });
+  var note = document.createElement("div");
+  note.className = "cc-note";
+  note.textContent = L.ccDepthNote;
+  panel.appendChild(note);
 
-  var groupList = seenGroupIds.map(function(gid) {
-    return TOKEN_GROUPS.find(function(g) { return g.id === gid; });
-  }).filter(Boolean);
+  // ── Theme dropdown (issue #11) ──
+  buildThemeRow(panel, L);
 
-  groupList.forEach(function(g) {
+  // ── Per-group rows: FG / BG hex + text attributes ──
+  orderedGroups().forEach(function(g) {
+    var st = groupStyle[g.id];
     var row = document.createElement("div");
-    row.className = "cc-row";
+    row.className = "cc-row cc-grouprow";
 
     var label = document.createElement("span");
     label.className = "cc-label";
     label.textContent = g.label[currentLang];
     row.appendChild(label);
 
-    var swatches = document.createElement("div");
-    swatches.className = "cc-swatches";
+    var ctrls = document.createElement("div");
+    ctrls.className = "cc-ctrls";
 
-    ANSI_PALETTE.forEach(function(color) {
+    ctrls.appendChild(makeColorCtrl("FG",
+      function() { return st.fg; },
+      function(v) { st.fg = v; activeTheme = null; }, "#d0dae6"));
+    ctrls.appendChild(makeColorCtrl("BG",
+      function() { return st.bg; },
+      function(v) { st.bg = v; activeTheme = null; }, "#1e1e2e"));
+
+    [["bold", "B"], ["dim", "D"], ["italic", "I"], ["underline", "U"]].forEach(function(a) {
       var btn = document.createElement("button");
-      btn.className = "cc-swatch";
-      if (color.name === "none") {
-        btn.classList.add("cc-swatch-none");
-      } else {
-        btn.style.background = color.css;
-      }
-      btn.title = color.label[currentLang];
-
-      // Mark active
-      if (groupColors[g.id] === color.ansi) {
-        btn.classList.add("active");
-      }
-
-      btn.onclick = function() {
-        groupColors[g.id] = color.ansi;
-        // Update active state in this row
-        var siblings = swatches.querySelectorAll(".cc-swatch");
-        for (var i = 0; i < siblings.length; i++) {
-          siblings[i].classList.remove("active");
-        }
-        btn.classList.add("active");
-        onFormatChange();
-      };
-
-      swatches.appendChild(btn);
+      btn.className = "cc-attr" + (st[a[0]] ? " active" : "");
+      btn.textContent = a[1];
+      btn.title = a[0];
+      if (a[0] === "bold") btn.style.fontWeight = "700";
+      if (a[0] === "italic") btn.style.fontStyle = "italic";
+      if (a[0] === "underline") btn.style.textDecoration = "underline";
+      btn.onclick = function() { st[a[0]] = !st[a[0]]; btn.classList.toggle("active"); onFormatChange(); };
+      ctrls.appendChild(btn);
     });
 
-    row.appendChild(swatches);
+    row.appendChild(ctrls);
     panel.appendChild(row);
   });
+
+  var styleNote = document.createElement("div");
+  styleNote.className = "cc-note";
+  styleNote.textContent = L.ccStyleNote;
+  panel.appendChild(styleNote);
+
+  buildExtraPanels(panel, L);
+}
+
+/* ── Small UI builders ── */
+function ccCheckRow(labelText, checked, onChange) {
+  var row = document.createElement("label");
+  row.className = "cc-row cc-checkrow";
+  var span = document.createElement("span");
+  span.className = "cc-label";
+  span.textContent = labelText;
+  var input = document.createElement("input");
+  input.type = "checkbox";
+  input.checked = !!checked;
+  input.onchange = function() { onChange(input.checked); };
+  row.appendChild(span);
+  row.appendChild(input);
+  return row;
+}
+function ccSelectRow(labelText, options, value, onChange) {
+  var row = document.createElement("div");
+  row.className = "cc-row";
+  var span = document.createElement("span");
+  span.className = "cc-label";
+  span.textContent = labelText;
+  var sel = document.createElement("select");
+  sel.className = "cc-select";
+  options.forEach(function(o) {
+    var opt = document.createElement("option");
+    opt.value = o[0]; opt.textContent = o[1];
+    if (value === o[0]) opt.selected = true;
+    sel.appendChild(opt);
+  });
+  sel.onchange = function() { onChange(sel.value); };
+  row.appendChild(span);
+  row.appendChild(sel);
+  return row;
+}
+function ccSubHeader(text) {
+  var h = document.createElement("div");
+  h.className = "cc-subheader";
+  h.textContent = text;
+  return h;
+}
+function ccNote(text) {
+  var n = document.createElement("div");
+  n.className = "cc-note";
+  n.textContent = text;
+  return n;
+}
+
+function buildExtraPanels(panel, L) {
+  // ── Text-style globals (issue #15) ──
+  panel.appendChild(ccSubHeader(L.ccDepth === "Color depth" ? "Text styles" : "テキストスタイル"));
+  panel.appendChild(ccCheckRow(L.ccDepth === "Color depth" ? "Global bold" : "全体を太字",
+    textStyle.globalBold, function(v) { textStyle.globalBold = v; onFormatChange(); }));
+  panel.appendChild(ccCheckRow(L.ccDepth === "Color depth" ? "Dim separators" : "セパレータを淡色",
+    textStyle.dimSeparators, function(v) { textStyle.dimSeparators = v; onFormatChange(); }));
+
+  // ── Powerline (issue #12) ──
+  panel.appendChild(ccSubHeader(L.plHeader));
+  panel.appendChild(ccCheckRow(L.plEnable, powerline.enabled, function(v) {
+    powerline.enabled = v;
+    if (v && activeTheme) applyTheme(activeTheme); // fill BGs from theme surface
+    if (v && colorDepth === "basic") colorDepth = "truecolor";
+    buildColorConfig(); onFormatChange();
+  }));
+  if (powerline.enabled) {
+    var sepOpts = Object.keys(PL_SEPARATORS).map(function(k) { return [k, PL_SEPARATORS[k].label]; });
+    panel.appendChild(ccSelectRow(L.plSep, sepOpts, powerline.tui ? "tui" : powerline.sep, function(v) {
+      if (v === "tui") { powerline.tui = true; powerline.sep = "tui"; }
+      else { powerline.tui = false; powerline.sep = v; }
+      onFormatChange();
+    }));
+    panel.appendChild(ccCheckRow(L.plCap, powerline.startCap, function(v) { powerline.startCap = v; onFormatChange(); }));
+    panel.appendChild(ccSelectRow(L.plPad, [["0", "0"], ["1", "1"], ["2", "2"]], "" + powerline.padding, function(v) {
+      powerline.padding = parseInt(v, 10); onFormatChange();
+    }));
+    panel.appendChild(ccNote(L.plNote));
+  }
+
+  // ── Icons (issue #13) ──
+  panel.appendChild(ccSubHeader(L.iconHeader));
+  panel.appendChild(ccCheckRow(L.iconEnable, icons.enabled, function(v) {
+    icons.enabled = v; buildColorConfig(); onFormatChange();
+  }));
+  if (icons.enabled) {
+    panel.appendChild(ccSelectRow(L.iconTier,
+      [["emoji", "Emoji"], ["unicode", "Plain Unicode"], ["nerd", "Nerd Font"], ["ascii", "ASCII"]],
+      icons.tier, function(v) { icons.tier = v; onFormatChange(); }));
+    panel.appendChild(ccNote(L.iconNote));
+  }
+
+  // ── Context bar (issue #14) ──
+  panel.appendChild(ccSubHeader(L.barHeader));
+  panel.appendChild(ccSelectRow(L.barWidth, [["6", "6"], ["8", "8"], ["16", "16"], ["32", "32"]],
+    "" + barConfig.width, function(v) { barConfig.width = parseInt(v, 10); onFormatChange(); }));
+  panel.appendChild(ccSelectRow(L.barStyle,
+    [["solid", "Solid █░"], ["fine", "Fine ▏▎▍▌"], ["shaded", "Shaded ▒▓"], ["dots", "Dots ●○"], ["line", "Line ━┄"], ["numeric", "Numeric"]],
+    barConfig.style, function(v) { barConfig.style = v; onFormatChange(); }));
+  panel.appendChild(ccSelectRow(L.barColor,
+    [["single", "Single"], ["threshold", "Threshold"], ["gradient", "Gradient"]],
+    barConfig.colorMode, function(v) { barConfig.colorMode = v; onFormatChange(); }));
+
+  // ── Compatibility (issue #16) ──
+  panel.appendChild(ccSubHeader(L.compatHeader));
+  panel.appendChild(ccSelectRow(L.compatCharset,
+    [["auto", "Auto"], ["nerd", "Nerd Font"], ["unicode", "Unicode"], ["ascii", "ASCII"]],
+    compat.charset, function(v) {
+      compat.charset = v;
+      // ASCII/Unicode charset overrides icon tier for safety
+      if (v === "ascii") icons.tier = "ascii";
+      else if (v === "unicode" && icons.tier === "nerd") icons.tier = "unicode";
+      buildColorConfig(); onFormatChange();
+    }));
+  panel.appendChild(ccCheckRow(L.compatGuard, compat.runtimeGuard, function(v) { compat.runtimeGuard = v; onFormatChange(); }));
+  panel.appendChild(ccCheckRow(L.compatNoColor, compat.respectNoColor, function(v) { compat.respectNoColor = v; onFormatChange(); }));
+  panel.appendChild(ccNote(L.compatNote));
 }
 
 function renderPreviewLine(container, lineFmt, stateKey) {
@@ -1848,13 +2370,18 @@ function renderPreviewLine(container, lineFmt, stateKey) {
         var span = document.createElement("span");
         span.className = "sb-token";
         if (colorsEnabled && val) {
-          var gcAnsi = groupColors[group.id];
-          var gcCss = ANSI_TO_CSS[gcAnsi];
-          if (gcCss) {
-            span.style.color = gcCss;
+          var st = groupStyle[group.id];
+          if (st) {
+            if (st.fg) span.style.color = st.fg;
+            if (st.bg) { span.style.background = st.bg; span.style.padding = "0 3px"; span.style.borderRadius = "3px"; }
+            if (st.bold) span.style.fontWeight = "700";
+            if (st.dim) span.style.opacity = "0.6";
+            if (st.italic) span.style.fontStyle = "italic";
+            if (st.underline) span.style.textDecoration = "underline";
           }
         }
-        span.textContent = val;
+        var icon = iconFor(id, group.id);
+        span.textContent = icon ? (icon + " " + val) : val;
         container.appendChild(span);
       } else {
         var unkSpan = document.createElement("span");
@@ -2000,110 +2527,7 @@ function generateScript(fmt, usedTokens) {
     return;
   }
 
-  // Collect needed helpers
-  var helpersNeeded = {};
-  usedTokens.forEach(function(id) {
-    var t = TOKEN_MAP[id];
-    if (t.needsHelper) helpersNeeded[t.needsHelper] = true;
-  });
-
-  // Build script lines
-  var lines = [];
-  lines.push("#!/usr/bin/env bash");
-  lines.push("# Claude Code statusline script \u2014 Generated by StatusCraft v4");
-  lines.push("# Save to ~/.claude/statusline.sh and chmod +x");
-  lines.push("");
-  lines.push("# Read JSON from stdin");
-  lines.push("INPUT=$(cat)");
-  lines.push("");
-  lines.push("# Check for jq");
-  lines.push('command -v jq >/dev/null 2>&1 || { echo "jq required"; exit 1; }');
-
-  // Helper functions (only if needed)
-  var helperKeys = Object.keys(helpersNeeded);
-  if (helperKeys.length > 0) {
-    lines.push("");
-    helperKeys.forEach(function(h) {
-      if (HELPERS[h]) {
-        lines.push(HELPERS[h]);
-        lines.push("");
-      }
-    });
-  }
-
-  // Extract section
-  lines.push("# === Extract values ===");
-  var jqWritten = {};
-
-  usedTokens.forEach(function(id) {
-    var t = TOKEN_MAP[id];
-
-    // Special case: lines_changed needs two jq calls
-    if (t.jqLines) {
-      t.jqLines.forEach(function(line) { lines.push(line); });
-      jqWritten[id] = true;
-      return;
-    }
-
-    // time token: no jq needed
-    if (t.jq === null) return;
-
-    var varKey = t.bashVar;
-    if (!jqWritten[varKey]) {
-      lines.push(varKey + "=$(echo \"$INPUT\" | jq -r '" + t.jq + "')");
-      jqWritten[varKey] = true;
-    }
-  });
-
-  // Format section
-  var formatTokens = usedTokens.filter(function(id) { return TOKEN_MAP[id].formatLine; });
-  if (formatTokens.length > 0) {
-    lines.push("");
-    lines.push("# === Format values ===");
-    formatTokens.forEach(function(id) {
-      lines.push(TOKEN_MAP[id].formatLine);
-    });
-  }
-
-  // Output section
-  lines.push("");
-  lines.push("# === Output ===");
-
-  var fmtLines = fmt.split("\n");
-  fmtLines.forEach(function(lineFmt) {
-    if (colorsEnabled) {
-      var colorParts = lineFmt.split(/(\{\w+\})/);
-      var colorEcho = colorParts.map(function(part) {
-        var m = part.match(/^\{(\w+)\}$/);
-        if (m) {
-          var t = TOKEN_MAP[m[1]];
-          if (!t) return part.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
-          var g = TOKEN_GROUP_MAP[m[1]];
-          var ansiCode = groupColors[g.id];
-          if (ansiCode) {
-            return ansiCode + t.echoRef + "\\033[0m";
-          }
-          return t.echoRef;
-        }
-        return part.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
-      }).join('');
-      lines.push('echo -e "' + colorEcho + '"');
-    } else {
-      var echoParts = lineFmt.split(/(\{\w+\})/);
-      var echoStr = echoParts.map(function(part) {
-        var m = part.match(/^\{(\w+)\}$/);
-        if (m) {
-          var t = TOKEN_MAP[m[1]];
-          if (!t) return part.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
-          return t.echoRef;
-        }
-        return part.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
-      }).join('');
-      lines.push('echo "' + echoStr + '"');
-    }
-  });
-
-  var scriptText = lines.join("\n");
+  var scriptText = generateScriptText(fmt, colorsEnabled);
   pre.textContent = "";
   pre.appendChild(highlightBashDOM(scriptText));
 }
@@ -2340,12 +2764,22 @@ function generateScriptText(fmt, colorsOn) {
   lines.push("# Check for jq");
   lines.push('command -v jq >/dev/null 2>&1 || { echo "jq required"; exit 1; }');
 
+  // Runtime color-tier guard (issue #16) — optional, references $C_ON later.
+  if (colorsOn && (compat.runtimeGuard || compat.respectNoColor)) {
+    lines.push("");
+    lines.push("# === Color tier detection ===");
+    lines.push('if [ -n "$NO_COLOR" ]; then C_ON=0');
+    lines.push('elif [ "$FORCE_COLOR" = 0 ]; then C_ON=0');
+    lines.push('else C_ON=1; fi');
+  }
+
   var helperKeys = Object.keys(helpersNeeded);
   if (helperKeys.length > 0) {
     lines.push("");
     helperKeys.forEach(function(h) {
-      if (HELPERS[h]) {
-        lines.push(HELPERS[h]);
+      var src = (h === "bar") ? barHelperSrc() : HELPERS[h];
+      if (src) {
+        lines.push(src);
         lines.push("");
       }
     });
@@ -2374,7 +2808,7 @@ function generateScriptText(fmt, colorsOn) {
     lines.push("");
     lines.push("# === Format values ===");
     formatTokens.forEach(function(id) {
-      lines.push(TOKEN_MAP[id].formatLine);
+      lines.push(formatLineFor(id, colorsOn));
     });
   }
 
@@ -2382,40 +2816,181 @@ function generateScriptText(fmt, colorsOn) {
   lines.push("# === Output ===");
 
   var fmtLines = fmt.split("\n");
-  fmtLines.forEach(function(lineFmt) {
-    if (colorsOn) {
-      var colorParts = lineFmt.split(/(\{\w+\})/);
-      var colorEcho = colorParts.map(function(part) {
-        var m = part.match(/^\{(\w+)\}$/);
-        if (m) {
-          var t = TOKEN_MAP[m[1]];
-          if (!t) return part.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
-          var g = TOKEN_GROUP_MAP[m[1]];
-          var ansiCode = groupColors[g.id];
-          if (ansiCode) {
-            return ansiCode + t.echoRef + "\\033[0m";
-          }
-          return t.echoRef;
-        }
-        return part.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
-      }).join('');
-      lines.push('echo -e "' + colorEcho + '"');
+  var gated = colorsOn && (compat.runtimeGuard || compat.respectNoColor);
+  if (gated) {
+    lines.push('if [ "$C_ON" = 1 ]; then');
+    fmtLines.forEach(function(lineFmt) {
+      lines.push("  " + (powerline.enabled ? buildPowerlineEcho(lineFmt) : buildStyledEcho(lineFmt)));
+    });
+    lines.push("else");
+    fmtLines.forEach(function(lineFmt) {
+      lines.push("  " + buildPlainEcho(lineFmt));
+    });
+    lines.push("fi");
+  } else {
+    fmtLines.forEach(function(lineFmt) {
+      if (colorsOn && powerline.enabled) {
+        lines.push(buildPowerlineEcho(lineFmt));
+      } else if (colorsOn) {
+        lines.push(buildStyledEcho(lineFmt));
+      } else {
+        lines.push(buildPlainEcho(lineFmt));
+      }
+    });
+  }
+
+  return lines.join("\n");
+}
+
+/* Escape a literal string for inclusion inside a double-quoted bash echo. */
+function escEcho(s) { return s.replace(/\\/g, "\\\\").replace(/"/g, '\\"'); }
+
+/* The reset escape, honoring NO_COLOR-style emptying handled elsewhere. */
+var RESET = "\\033[0m";
+
+/* One styled token: optional icon + color/attr span + reset. */
+function tokenEcho(id, colorsOn) {
+  var t = TOKEN_MAP[id];
+  var g = TOKEN_GROUP_MAP[id];
+  var icon = iconFor(id, g ? g.id : null);
+  var iconStr = icon ? escEcho(icon) + " " : "";
+  if (colorsOn && g) {
+    var pre = sgrPrefix(groupStyle[g.id]);
+    if (pre) return pre + iconStr + t.echoRef + RESET;
+  }
+  return iconStr + t.echoRef;
+}
+
+/* Standard (non-powerline) styled line. */
+function buildStyledEcho(lineFmt) {
+  var parts = lineFmt.split(/(\{\w+\})/);
+  var out = parts.map(function(part) {
+    var m = part.match(/^\{(\w+)\}$/);
+    if (m) {
+      if (!TOKEN_MAP[m[1]]) return escEcho(part);
+      return tokenEcho(m[1], true);
+    }
+    var lit = escEcho(part);
+    if (textStyle.dimSeparators && part.trim()) return "\\033[2m" + lit + RESET;
+    return lit;
+  }).join("");
+  return 'echo -e "' + out + '"';
+}
+
+/* Plain line (no colors). Icons may still be present (they are literal glyphs). */
+function buildPlainEcho(lineFmt) {
+  var anyIcon = false;
+  var parts = lineFmt.split(/(\{\w+\})/);
+  var out = parts.map(function(part) {
+    var m = part.match(/^\{(\w+)\}$/);
+    if (m) {
+      var t = TOKEN_MAP[m[1]];
+      if (!t) return escEcho(part);
+      var g = TOKEN_GROUP_MAP[m[1]];
+      var icon = iconFor(m[1], g ? g.id : null);
+      if (icon) anyIcon = true;
+      return (icon ? escEcho(icon) + " " : "") + t.echoRef;
+    }
+    return escEcho(part);
+  }).join("");
+  return 'echo "' + out + '"';
+}
+
+/* Powerline line (issue #12): each token becomes a bg-filled segment joined by
+   separator glyphs whose fg = previous bg and bg = next bg (the color hand-off). */
+function buildPowerlineEcho(lineFmt) {
+  var sepDef = PL_SEPARATORS[powerline.sep] || PL_SEPARATORS.arrow;
+  var pad = " ".repeat(powerline.padding != null ? powerline.padding : 1);
+
+  // Collect token segments in order (literals between tokens are dropped in powerline mode).
+  var segs = [];
+  lineFmt.split(/(\{\w+\})/).forEach(function(part) {
+    var m = part.match(/^\{(\w+)\}$/);
+    if (m && TOKEN_MAP[m[1]]) {
+      var g = TOKEN_GROUP_MAP[m[1]];
+      var st = groupStyle[g.id];
+      segs.push({ id: m[1], g: g, bg: st.bg || "#313244", fg: st.fg || "#1e1e2e", st: st });
+    }
+  });
+  if (segs.length === 0) return 'echo -e ""';
+
+  var out = "";
+  // start cap
+  if (powerline.tui) {
+    // box-drawing, font-free: simple brackets
+    out += "";
+  } else if (powerline.startCap && sepDef.left) {
+    out += "\\033[38;2;" + rgbStr(segs[0].bg) + "m" + escEcho(sepDef.left) + RESET;
+  }
+
+  segs.forEach(function(s, i) {
+    var icon = iconFor(s.id, s.g.id);
+    var iconStr = icon ? escEcho(icon) + " " : "";
+    var attrs = attrCodes(s.st);
+    var fgc = fgCodes(s.fg, colorDepth).join(";");
+    var bgc = bgCodes(s.bg, colorDepth).join(";");
+    var pre = "\\033[" + (attrs ? attrs + ";" : "") + bgc + ";" + fgc + "m";
+    if (powerline.tui) {
+      out += pre + pad + iconStr + TOKEN_MAP[s.id].echoRef + pad + RESET;
+      if (i < segs.length - 1) out += escEcho(" " + (sepDef.tui || "│") + " ");
     } else {
-      var echoParts = lineFmt.split(/(\{\w+\})/);
-      var echoStr = echoParts.map(function(part) {
-        var m = part.match(/^\{(\w+)\}$/);
-        if (m) {
-          var t = TOKEN_MAP[m[1]];
-          if (!t) return part.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
-          return t.echoRef;
-        }
-        return part.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
-      }).join('');
-      lines.push('echo "' + echoStr + '"');
+      out += pre + pad + iconStr + TOKEN_MAP[s.id].echoRef + pad;
+      if (i < segs.length - 1) {
+        // separator: fg = this bg, bg = next bg
+        out += "\\033[" + fgFromBg(s.bg) + ";" + bgCodes(segs[i + 1].bg, colorDepth).join(";") + "m" + escEcho(sepDef.right);
+      }
     }
   });
 
-  return lines.join("\n");
+  // end cap: fg = last bg, reset bg
+  if (!powerline.tui) {
+    out += "\\033[49m\\033[" + fgFromBg(segs[segs.length - 1].bg) + "m" + escEcho(sepDef.right) + RESET;
+  }
+  return 'echo -e "' + out + '"';
+}
+
+/* fg SGR codes derived from a bg hex (used for separator hand-off). */
+function fgFromBg(hex) { return fgCodes(hex, colorDepth).join(";"); }
+function rgbStr(hex) { var c = hexToRgb(hex); return c.r + ";" + c.g + ";" + c.b; }
+function attrCodes(st) {
+  var a = [];
+  if (st.bold || textStyle.globalBold) a.push("1");
+  if (st.dim) a.push("2");
+  if (st.italic) a.push("3");
+  if (st.underline) a.push("4");
+  return a.join(";");
+}
+
+/* ── Bar helper sources (issue #14) ── */
+var BAR_SRC = {
+  solid: '# Helper: Progress bar (solid)\nmake_bar() {\n  local pct=${1:-0} width=${2:-8}\n  local filled=$((pct * width / 100))\n  [ "$filled" -gt "$width" ] && filled=$width\n  local empty=$((width - filled))\n  local bar=""\n  for ((i=0; i<filled; i++)); do bar+="█"; done\n  for ((i=0; i<empty; i++)); do bar+="░"; done\n  echo "$bar"\n}',
+  fine: '# Helper: Progress bar (fine eighth-blocks)\nmake_bar() {\n  local pct=${1:-0} width=${2:-8}\n  local eighths=$((pct * width * 8 / 100))\n  [ $eighths -gt $((width*8)) ] && eighths=$((width*8))\n  local full=$((eighths / 8)) rem=$((eighths % 8)) i\n  local PARTS=(\' \' \'▏\' \'▎\' \'▍\' \'▌\' \'▋\' \'▊\' \'▉\')\n  local bar=""\n  for ((i=0; i<full; i++)); do bar+="█"; done\n  if [ $rem -gt 0 ]; then bar+="${PARTS[$rem]}"; full=$((full+1)); fi\n  for ((i=full; i<width; i++)); do bar+="░"; done\n  echo "$bar"\n}',
+  shaded: '# Helper: Progress bar (shaded track)\nmake_bar() {\n  local pct=${1:-0} width=${2:-8}\n  local filled=$((pct * width / 100))\n  [ "$filled" -gt "$width" ] && filled=$width\n  local empty=$((width - filled)) i bar=""\n  for ((i=0; i<filled; i++)); do bar+="▓"; done\n  for ((i=0; i<empty; i++)); do bar+="▒"; done\n  echo "$bar"\n}',
+  dots: '# Helper: Progress bar (dots)\nmake_bar() {\n  local pct=${1:-0} width=${2:-8}\n  local filled=$((pct * width / 100))\n  [ "$filled" -gt "$width" ] && filled=$width\n  local empty=$((width - filled)) i bar=""\n  for ((i=0; i<filled; i++)); do bar+="●"; done\n  for ((i=0; i<empty; i++)); do bar+="○"; done\n  echo "$bar"\n}',
+  line: '# Helper: Progress bar (line)\nmake_bar() {\n  local pct=${1:-0} width=${2:-8}\n  local filled=$((pct * width / 100))\n  [ "$filled" -gt "$width" ] && filled=$width\n  local empty=$((width - filled)) i bar=""\n  for ((i=0; i<filled; i++)); do bar+="━"; done\n  for ((i=0; i<empty; i++)); do bar+="┄"; done\n  echo "$bar"\n}',
+  numeric: '# Helper: Progress bar (numeric)\nmake_bar() {\n  local pct=${1:-0}\n  printf "%d%%" "$pct"\n}'
+};
+function barHelperSrc() { return BAR_SRC[barConfig.style] || BAR_SRC.solid; }
+
+/* The format line for a token, with per-feature overrides (context_bar width/threshold). */
+function formatLineFor(id, colorsOn) {
+  if (id === "context_bar") {
+    var w = barConfig.width;
+    var fl = 'ctx_bar=$(make_bar "$ctx_bar_pct" ' + w + ')';
+    if (colorsOn && (barConfig.colorMode === "threshold" || barConfig.colorMode === "gradient")) {
+      var warn = (activeTheme && THEMES[activeTheme]) ? THEMES[activeTheme].warn : "#e3b341";
+      var crit = (activeTheme && THEMES[activeTheme]) ? THEMES[activeTheme].crit : "#ef4444";
+      var ok = (activeTheme && THEMES[activeTheme]) ? THEMES[activeTheme].context : "#3ddc84";
+      var cOk = "\\033[" + fgCodes(ok, colorDepth).join(";") + "m";
+      var cWarn = "\\033[" + fgCodes(warn, colorDepth).join(";") + "m";
+      var cCrit = "\\033[" + fgCodes(crit, colorDepth).join(";") + "m";
+      fl += "\n" + 'if [ "$ctx_bar_pct" -ge ' + barConfig.t2 + ' ]; then ctx_bar="' + cCrit + '${ctx_bar}\\033[0m"';
+      fl += "\n" + 'elif [ "$ctx_bar_pct" -ge ' + barConfig.t1 + ' ]; then ctx_bar="' + cWarn + '${ctx_bar}\\033[0m"';
+      fl += "\n" + 'else ctx_bar="' + cOk + '${ctx_bar}\\033[0m"; fi';
+    }
+    return fl;
+  }
+  return TOKEN_MAP[id].formatLine;
 }
 
 /* ═══════════════════════════════════════════════
@@ -2439,10 +3014,21 @@ function applyToClaude() {
 
   var scriptText = generateScriptText(fmt, colorsEnabled);
 
+  var style = colorsEnabled ? {
+    depth: colorDepth,
+    groupStyle: JSON.parse(JSON.stringify(groupStyle)),
+    theme: activeTheme,
+    textStyle: JSON.parse(JSON.stringify(textStyle)),
+    powerline: JSON.parse(JSON.stringify(powerline)),
+    icons: JSON.parse(JSON.stringify(icons)),
+    bar: JSON.parse(JSON.stringify(barConfig)),
+    compat: JSON.parse(JSON.stringify(compat))
+  } : undefined;
+
   var config = {
     format: fmt,
     colors: colorsEnabled,
-    groupColors: colorsEnabled ? JSON.parse(JSON.stringify(groupColors)) : undefined,
+    style: style,
     script: scriptText,
     settings: buildStatusLineObject(parseTokens(fmt)),
     timestamp: new Date().toISOString()
@@ -2504,42 +3090,52 @@ function copySetup() {
 /* ═══════════════════════════════════════════════
    URL SHARING
 ═══════════════════════════════════════════════ */
+/* Serialize per-group colors as hex: gid:fg[.bg] (omits "#"). */
 function buildColorParam() {
   var parts = [];
   TOKEN_GROUPS.forEach(function(g) {
-    var ansi = groupColors[g.id];
-    // Find the code number for this ANSI
-    var found = ANSI_PALETTE.filter(function(p) { return p.ansi === ansi; });
-    if (found.length > 0) {
-      parts.push(g.id + ":" + found[0].code);
-    }
+    var st = groupStyle[g.id];
+    if (!st) return;
+    if (!st.fg && !st.bg) { parts.push(g.id + ":0"); return; }
+    var v = st.fg ? st.fg.replace("#", "") : "";
+    if (st.bg) v += "." + st.bg.replace("#", "");
+    parts.push(g.id + ":" + v);
   });
   return parts.join(",");
 }
 
-function updateURL(fmt) {
+/* Shared param builder for the full styling state. */
+function buildShareParams(fmt) {
   var params = new URLSearchParams();
   if (fmt) params.set("fmt", fmt);
   if (currentLang !== "en") params.set("lang", currentLang);
   if (colorsEnabled) {
     params.set("colors", "1");
     params.set("cc", buildColorParam());
+    if (colorDepth !== "basic") params.set("cd", colorDepth);
+    if (activeTheme) params.set("theme", activeTheme);
+    if (powerline.enabled) params.set("pl", powerline.tui ? "tui" : powerline.sep);
+    if (icons.enabled) params.set("ic", icons.tier);
+    if (barConfig.style !== "solid" || barConfig.width !== 8 || barConfig.colorMode !== "single") {
+      params.set("bar", barConfig.width + "-" + barConfig.style + "-" + barConfig.colorMode);
+    }
+    if (textStyle.globalBold) params.set("b", "1");
+    if (textStyle.dimSeparators) params.set("ds", "1");
+    if (compat.runtimeGuard) params.set("rg", "1");
+    if (compat.respectNoColor) params.set("nc", "1");
   }
-  var qs = params.toString();
+  return params;
+}
+
+function updateURL(fmt) {
+  var qs = buildShareParams(fmt).toString();
   var url = window.location.pathname + (qs ? "?" + qs : "");
   history.replaceState(null, "", url);
 }
 
 function shareURL() {
   var fmt = document.getElementById("formatInput").value;
-  var params = new URLSearchParams();
-  if (fmt) params.set("fmt", fmt);
-  if (currentLang !== "en") params.set("lang", currentLang);
-  if (colorsEnabled) {
-    params.set("colors", "1");
-    params.set("cc", buildColorParam());
-  }
-  var qs = params.toString();
+  var qs = buildShareParams(fmt).toString();
   var url = window.location.origin + window.location.pathname + (qs ? "?" + qs : "");
   navigator.clipboard.writeText(url).then(function() {
     showToast(I18N[currentLang].toastShared);

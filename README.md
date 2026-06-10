@@ -32,7 +32,13 @@ The result is a working, commented bash script that handles:
 - **34 tokens** across 6 categories: Model & Session, Context Window, Cost & Activity, Rate Limits, Workspace, Advanced
 - **6 built-in presets**: Minimal, Standard, Developer, Rate-aware, Visual bar, Full info
 - **Live preview** with 3 load states (Normal, High load, Startup)
-- **Color customization**: 8 ANSI color options per group
+- **Full color model**: per-group foreground **and** background hex pickers with a color-depth selector — Truecolor (`38;2`/`48;2`), 256-color, or Basic-16
+- **Curated themes**: one-click Catppuccin, Dracula, Nord, Tokyo Night, Gruvbox, and Rosé Pine (with variants)
+- **Powerline mode**: bg-filled segments with arrow / chevron / round / slant / flame / lego separators and color hand-off, plus a font-free TUI style
+- **Per-token icons**: Emoji (default, no font), plain Unicode, Nerd Font, or ASCII tiers
+- **Rich progress bars**: solid / fine eighth-block / shaded / dots / line / numeric styles, custom width, and single / threshold / gradient coloring
+- **Text styles**: bold, dim, italic, underline, and standalone background badges per group
+- **Graceful degradation**: charset tier toggle plus optional `NO_COLOR` / `FORCE_COLOR` runtime color fallback baked into the script
 - **Multi-line support**: Use newline separators for multi-line statuslines
 - **Language toggle**: English / Japanese UI
 - **URL sharing**: Design configs are embedded in shareable URLs
